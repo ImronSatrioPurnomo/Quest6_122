@@ -62,6 +62,7 @@ fun TampilSiswa(
                 item.forEach { item ->
                     Column { Text(text = item.first.uppercase(),
                         fontSize = 16.sp)
+                        Spacer(modifier = Modifier.height(height = dimensionResource(id = R.dimen.padding_small)))
                         Text(text = item.second,
                             fontWeight = FontWeight.Bold,
                             fontFamily = FontFamily.Cursive, fontSize = 22.sp)}
