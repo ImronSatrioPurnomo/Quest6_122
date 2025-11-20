@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
@@ -67,9 +68,9 @@ fun TampilSiswa(
                             fontWeight = FontWeight.Bold,
                             fontFamily = FontFamily.Cursive, fontSize = 22.sp)}
                 }
-                HorizontalDivider(thickness = 1.dp, color = Color.Cyan)
+                Divider(thickness = dimensionResource(id = R.dimen.thickness_divider))
             }
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             Button(modifier = Modifier.fillMaxWidth(),
                 onClick = onSubmitButtonClicked
             ) {
