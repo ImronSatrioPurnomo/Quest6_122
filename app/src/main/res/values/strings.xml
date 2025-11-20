@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Quest6_122</string>
+    <string name="laki">laki-laki</string>
+    <string name="wanita">Perempuan</string>
+    <string name="submit">Submit</string>
+    <string name="back">Backk</string>
+    <string name="nama">Nama Lengkap</string>
+    <string name="alamat">Alamat</string>
+    <string name="gender">Jenis</string>
+    <string name="detail">Data Siswa</string>
+</resources>
