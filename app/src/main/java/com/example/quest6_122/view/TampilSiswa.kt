@@ -44,7 +44,7 @@ fun TampilSiswa(
             TopAppBar(
                 title = {
                     Text(
-                        text = stringResource(id = R.string.tampil),
+                        text = stringResource(id = R.string.detail),
                         color = Color.White
                     )},
                 colors = TopAppBarDefaults
@@ -70,7 +70,7 @@ fun TampilSiswa(
             }
             Spacer(modifier = Modifier.height(10.dp))
             Button(modifier = Modifier.fillMaxWidth(),
-                onClick = onBackBtnClick
+                onClick = onSubmitButtonClicked
             ) {
                 Text(text = stringResource(id = R.string.back))
             }
