@@ -1,84 +1,65 @@
-package com.example.quest6_122.view
+package com.example.quest6_122
 
-import android.widget.Space
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.internal.composableLambda
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.quest6_122.R
+import com.example.quest6_122.view.FormIsian
+import com.example.quest6_122.view.FormSiswa
+import com.example.quest6_122.view.TampilData
+import com.example.quest6_122.view.TampilSiswa
 import com.example.quest6_122.viewmodel.SiswaViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+enum class Navigasi {
+    Formulirku,
+    Detail
+}
+
 @Composable
 fun SiswaApp(
-    modifier: Modifier,
     viewModel: SiswaViewModel = viewModel(),
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    modifier: Modifier
 ){
-    val item = listOf(
-        Pair(first = stringResource(id = R.string.nama_lengkap), second = "Contoh Nama"),
-        Pair(first = stringResource(id = R.string.jenis_kelamin), second = "Lainnya"),
-        Pair(first = stringResource(id = R.string.alamat), second = "YOGYAKARTA")
-    )
-    Scaffold (modifier = Modifier,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.tampil),
-                        color = Color.White
-                    )},
-                colors = TopAppBarDefaults
-                    .mediumTopAppBarColors(containerColor = colorResource(id = R.color.teal_700)
-                    )
-            )
-        }){ isiRuang->
-        Column (modifier = Modifier.padding(paddingValues = isiRuang),
-            verticalArrangement = Arrangement.SpaceBetween
-        ){
-            Column (
-                modifier = Modifier.padding(all = dimensionResource(id = R.dimen.padding_medium)),
-                verticalArrangement = Arrangement.spacedBy(space = dimensionResource(id = R.dimen.padding_medium))
-            ){
-                item.forEach { item ->
-                    Column { Text(text = item.first.uppercase(),
-                        fontSize = 16.sp)
-                        Text(text = item.second,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = FontFamily.Cursive, fontSize = 22.sp)}
-                }
-                HorizontalDivider(thickness = 1.dp, color = Color.Cyan)
+    Scaffold { isiRuang ->
+        val UiState = viewModel.statusUI.collectAsState()
+        NavHost(
+            navController = navController,
+            startDestination = Navigasi.Formulirku.name,
+
+            modifier = Modifier.padding(paddingValues = isiRuang)){
+            composable(route = Navigasi.Formulirku.name){
+                val konteks = LocalContext.current
+                FormSiswa (
+                    OnSubmitBtnClick = {
+                        navController.navigate(route = Navigasi.Detail.name)
+                    }
+                )
             }
-            Spacer(modifier = Modifier.height(10.dp))
-            Button(modifier = Modifier.fillMaxWidth(),
-                onClick = onBackBtnClick
-            ) {
-                Text(text = stringResource(id = R.string.back))
+            composable(route = Navigasi.Detail.name){
+                TampilSiswa(
+                    onBackBtnClick = {
+                        cancelAndBackToFormulirku(navController)
+                    }
+                )
             }
         }
     }
+}
+
+private fun cancelAndBackToFormulirku(
+    navController: NavHostController
+) {
+    navController.popBackStack(route = Navigasi.Formulirku.name,
+        inclusive = false)
 }
