@@ -34,6 +34,9 @@ import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,9 +46,9 @@ fun FormSiswa(
     onSubmitButtonClicked: (MutableList<String>) -> Unit,
     modifier: Modifier = Modifier
 ){
-    var txtNama by rememberSaveable {mutableListOf(value = "") }
-    var txtAlamat by rememberSaveable {mutableListOf(value = "") }
-    var txtGender by rememberSaveable {mutableListOf(value = "") }
+    var txtNama by rememberSaveable { mutableStateOf(value = "") }
+    var txtAlamat by rememberSaveable {mutableStateOf(value = "") }
+    var txtGender by rememberSaveable {mutableStateOf(value = "") }
     val ListData: MutableList<String> = mutableListOf(txtNama,txtAlamat,txtGender)
 
 
@@ -105,17 +108,22 @@ fun FormSiswa(
                 color = Color.Red
             )
             OutlinedTextField(
-                value = "",
+                value = txtAlamat,
                 singleLine = true,
+                shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .width(250.dp),
-                label = {Text(text = "Alamat")},
-                onValueChange = {},
+                label = {Text(text = "Alamat Lengkap")},
+                onValueChange = {
+                    txtAlamat = it
+                }
             )
             Spacer(modifier = Modifier.height(30.dp))
             Button(
                 modifier = Modifier.fillMaxWidth(1f),
-                onClick = onSubmitButtonClicked
+                onClick = {
+                    onSubmitButtonClicked(ListData)
+                }
             ) {
                 Text(text = stringResource(id = R.string.submit))
             }
