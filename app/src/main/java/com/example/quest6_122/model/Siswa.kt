@@ -1,4 +1,7 @@
-package com.example.quest6_122.model;
+package com.example.quest6_122.model
 
-public class Siswa {
-}
+data class Siswa(
+    val nama : String ="",
+    val gender: String ="",
+    val alamat: String =""
+)
